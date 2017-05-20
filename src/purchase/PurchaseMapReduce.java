@@ -13,7 +13,13 @@ import org.apache.hadoop.mapreduce.lib.partition.HashPartitioner;
 import org.apache.hadoop.util.Tool;
 import org.apache.hadoop.util.ToolRunner;
 
-
+/**
+ * 
+ * @author Kevin & Emil
+ *	Lab 11 Purchase Task
+ *	To start this program: "Run configuration" with the following parameter:
+ *	purchases.txt [outputFolder]
+ */
 public class PurchaseMapReduce extends Configured implements Tool {
 
 	public static void main(String[] args) throws Exception {
@@ -34,17 +40,22 @@ public class PurchaseMapReduce extends Configured implements Tool {
 		job.setJarByClass(this.getClass());
 	    job.setJobName("PurchaseMapReduce Driver");
 
-
+	    // TextInput since the id is a Long 
 		job.setInputFormatClass(TextInputFormat.class);
+		// Setting own mapper
 		job.setMapperClass(PurchaseMapper.class);
+		// Key--> The Item/category: Text
 		job.setMapOutputKeyClass(Text.class);
+		// Value --> Number of sold items
 		job.setMapOutputValueClass(DoubleWritable.class);
 
 		job.setPartitionerClass(HashPartitioner.class);
-		//job.setNumReduceTasks(0);
-
+		
+		//Setting own Reducer
 		job.setReducerClass(PurchaseReducer.class);
+		// Key--> The Item/category: Text
 		job.setOutputKeyClass(Text.class);
+		// Value --> Number of sold items
 		job.setOutputValueClass(DoubleWritable.class);
 
 		job.setOutputFormatClass(TextOutputFormat.class);

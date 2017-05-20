@@ -19,6 +19,7 @@ public class PurchaseReducer extends Reducer<Text, DoubleWritable,Text, DoubleWr
 			throws IOException, InterruptedException { 
 
 		Double sum = 0.0d;
+		// Add the current sum to the whole sum of previous calculation
 		for (DoubleWritable val : values) { 
 			sum += val.get(); 
 		} 
